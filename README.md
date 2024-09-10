@@ -1,53 +1,54 @@
-# New Project Template
+# GKE Autoscaling Benchmarking
 
-This repository contains a template that can be used to seed a repository for a
-new Google open source project.
+## Purpose
 
-See [go/releasing](http://go/releasing) (available externally at
-https://opensource.google/documentation/reference/releasing) for more information about
-releasing a new Google open source project.
+Runs a series of benchmarks against the workload autoscalers (HPA/VPA) within a
+GKE cluster.
 
-This template uses the Apache license, as is Google's default.  See the
-documentation for instructions on using alternate license.
+## Prereqs
 
-## How to use this template
+*   Ensure you can build docker images locally, without sudo
+    (https://docs.docker.com/engine/install/linux-postinstall/#manage-docker-as-a-non-root-user,
+    go/installdocker#sudoless-docker).
+*   Configure Artifact Registry and install the gcloud CLI credential helper
+    (http://cloud.google.com/artifact-registry/docs/docker/authentication,
+    go/installdocker#gcr-credential-helper)
+*   Ensure you're logged in via gcloud (Hint: `gcloud auth login`)
+*   Ensure you can run terraform
+    *   Install Terraform version `1.7.5` or higher with
+        [these instructions](https://developer.hashicorp.com/terraform/install)
 
-1. Clone it from GitHub.
-    * There is no reason to fork it.
-1. Create a new local repository and copy the files from this repo into it.
-1. Modify README.md and docs/contributing.md to represent your project, not the
-   template project.
-1. Develop your new project!
+## Instructions
 
-``` shell
-git clone https://github.com/google/new-project
-mkdir my-new-thing
-cd my-new-thing
-git init
-cp -r ../new-project/* ../new-project/.github .
-git add *
-git commit -a -m 'Boilerplate for new Google open source project'
-```
+1. Manually create a project with a valid billing account. (These scripts will
+   not do this for you).
+2. Create the cluster via:
+   ```bash
+   $ cd stage02-cluster
+   $ cp sample-terraform.tfvars terraform.tfvars
+   $ vim terraform.tfvars  # edit the values appropriately
+   $ terraform init
+   $ terraform apply
+   ```
+3. Create the workload via:
+   ```bash
+   cd stage03-workload
+   terraform init
+   terraform apply
+   ```
+4. Create the benchmarking tooling (which will run on the same cluster):
+   ```bash
+   cd stage04-benchmarking
+   terraform init
+   terraform apply
+   ```
+5. Start the benchmarking via the locust web UI
+   ```bash
+   # Get the external IP Addr
+   $ gcloud container clusters get-credentials wa-benchmarking --location=us-central1-c
+   $ kubectl get svc/locust -n fib -o json | jq '.status.loadBalancer.ingress[0].ip'
 
-## Source Code Headers
+   # Now visit the ip addr at port 8089 in your web browser
+   ```
 
-Every file containing source code must include copyright and license
-information. This includes any JS/CSS files that you might be serving out to
-browsers. (This is to help well-intentioned people avoid accidental copying that
-doesn't comply with the license.)
-
-Apache header:
-
-    Copyright 2024 Google LLC
-
-    Licensed under the Apache License, Version 2.0 (the "License");
-    you may not use this file except in compliance with the License.
-    You may obtain a copy of the License at
-
-        https://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing, software
-    distributed under the License is distributed on an "AS IS" BASIS,
-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    See the License for the specific language governing permissions and
-    limitations under the License.
+   Run the test with **50 users** to start.

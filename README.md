@@ -2,8 +2,8 @@
 
 ## Purpose
 
-Runs a series of benchmarks against the workload autoscalers (HPA/VPA) within a
-GKE cluster.
+Runs a series of benchmarks against a workload with HPA enabled within a GKE
+cluster.
 
 ## Prereqs
 
@@ -36,6 +36,9 @@ GKE cluster.
    terraform init
    terraform apply
    ```
+   
+   This will create a deployment that will calculate numbers in the fibonacci
+   sequence. Feel free to replace this with your own workload.
 4. Create the benchmarking tooling (which will run on the same cluster):
    ```bash
    cd stage04-benchmarking
@@ -45,7 +48,7 @@ GKE cluster.
 5. Start the benchmarking via the locust web UI
    ```bash
    # Get the external IP Addr
-   $ gcloud container clusters get-credentials wa-benchmarking --location=us-central1-c
+   $ gcloud container clusters get-credentials benchmarking --location=us-central1-c
    $ kubectl get svc/locust -n fib -o json | jq '.status.loadBalancer.ingress[0].ip'
 
    # Now visit the ip addr at port 8089 in your web browser

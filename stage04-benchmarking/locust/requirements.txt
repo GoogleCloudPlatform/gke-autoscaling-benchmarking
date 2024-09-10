@@ -20,7 +20,7 @@ msgpack==1.0.8
 psutil==5.9.8
 pyzmq==26.0.3
 requests==2.32.2
-setuptools==69.5.1
+setuptools==70.0.0
 urllib3==2.2.1
 Werkzeug==3.0.3
 wheel==0.43.0

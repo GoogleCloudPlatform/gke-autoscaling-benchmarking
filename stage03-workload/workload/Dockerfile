@@ -12,10 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM --platform=linux/amd64 python:3 as build
-WORKDIR /
-COPY requirements.txt requirements.txt
+FROM python:3
+RUN groupadd -r fib && useradd --no-log-init -r -g fib fib
+RUN mkdir /home/fib && chown -R fib:fib /home/fib
+
+USER fib
+WORKDIR /home/fib
+ENV PATH="$PATH:/home/fib/.local/bin"
+COPY --chown=fib:fib requirements.txt requirements.txt
 RUN pip install -r requirements.txt
 EXPOSE 5000
-COPY . .
+COPY --chown=fib:fib . .
 ENTRYPOINT [ "./entrypoint.sh" ]

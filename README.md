@@ -29,12 +29,14 @@ cluster.
    vim terraform.tfvars  # edit the values appropriately
    terraform init
    terraform apply
+   cd ..
    ```
 3. Create the workload via:
    ```bash
    cd stage03-workload
    terraform init
    terraform apply
+   cd ..
    ```
    
    This will create a deployment that will calculate numbers in the fibonacci
@@ -44,6 +46,7 @@ cluster.
    cd stage04-benchmarking
    terraform init
    terraform apply
+   cd ..
    ```
 5. Start the benchmarking via the locust web UI
    ```bash

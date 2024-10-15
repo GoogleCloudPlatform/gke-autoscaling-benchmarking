@@ -13,10 +13,15 @@
 # limitations under the License.
 
 FROM python:3.12-slim
-RUN mkdir /locust
-COPY requirements.txt /locust
-RUN pip3 install -r /locust/requirements.txt
+RUN groupadd -r locust && useradd --no-log-init -r -g locust locust
+RUN mkdir /home/locust && chown -R locust:locust /home/locust
+
+USER locust
+WORKDIR /home/locust
+ENV PATH="$PATH:/home/locust/.local/bin"
+COPY --chown=locust:locust requirements.txt requirements.txt
+RUN pip3 install -r requirements.txt
 EXPOSE 8089
 
-COPY simple.py /locust
-CMD locust -f /locust/simple.py
+COPY --chown=locust:locust simple.py /locust
+CMD locust -f ./simple.py

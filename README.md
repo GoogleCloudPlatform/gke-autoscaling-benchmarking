@@ -24,11 +24,11 @@ cluster.
    not do this for you).
 2. Create the cluster via:
    ```bash
-   $ cd stage02-cluster
-   $ cp sample-terraform.tfvars terraform.tfvars
-   $ vim terraform.tfvars  # edit the values appropriately
-   $ terraform init
-   $ terraform apply
+   cd stage02-cluster
+   cp sample-terraform.tfvars terraform.tfvars
+   vim terraform.tfvars  # edit the values appropriately
+   terraform init
+   terraform apply
    ```
 3. Create the workload via:
    ```bash
@@ -48,8 +48,8 @@ cluster.
 5. Start the benchmarking via the locust web UI
    ```bash
    # Get the external IP Addr
-   $ gcloud container clusters get-credentials benchmarking --location=us-central1-c
-   $ kubectl get svc/locust -n fib -o json | jq '.status.loadBalancer.ingress[0].ip'
+   gcloud container clusters get-credentials benchmarking --location=us-central1-c
+   kubectl get svc/locust -n fib -o json | jq '.status.loadBalancer.ingress[0].ip'
 
    # Now visit the ip addr at port 8089 in your web browser
    ```

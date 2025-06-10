@@ -19,7 +19,7 @@ MarkupSafe==2.1.5
 msgpack==1.0.8
 psutil==5.9.8
 pyzmq==26.0.3
-requests==2.32.2
+requests==2.32.4
 setuptools==70.0.0
 urllib3==2.2.2
 Werkzeug==3.0.3

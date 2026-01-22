@@ -23,6 +23,6 @@ requests==2.32.2
 setuptools==70.0.0
 urllib3==2.2.2
 Werkzeug==3.0.3
-wheel==0.43.0
+wheel==0.46.2
 zope.event==5.0
 zope.interface==6.4.post1

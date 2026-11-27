@@ -1,5 +1,5 @@
 # Generated via `pip3 install locust && pip3 freeze > requirements.txt`
-blinker==1.8.2
+blinker==1.9.0
 Brotli==1.2.1
 certifi==2026.10.18
 charset-normalizer==3.3.2
@@ -19,10 +19,9 @@ MarkupSafe==2.1.5
 msgpack==1.2.3
 psutil==5.9.8
 pyzmq==26.0.3
-requests==2.32.2
+requests==2.33.0
 setuptools==84.1.0
 urllib3==2.8.0
 Werkzeug==3.1.9
-wheel==0.43.0
 zope.event==5.0
 zope.interface==6.4.post1

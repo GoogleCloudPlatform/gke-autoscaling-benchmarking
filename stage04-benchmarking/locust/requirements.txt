@@ -21,7 +21,7 @@ psutil==5.9.8
 pyzmq==26.0.3
 requests==2.32.2
 setuptools==84.1.0
-urllib3==2.2.2
+urllib3==2.8.0
 Werkzeug==3.1.9
 wheel==0.43.0
 zope.event==5.0
